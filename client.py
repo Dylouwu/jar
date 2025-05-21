@@ -3,6 +3,9 @@ import subprocess
 import requests
 import sys
 
+DEFAULT_SERVER_IP = "SERVER_IP_PLACEHOLDER"
+DEFAULT_SERVER_PORT = SERVER_PORT_PLACEHOLDER
+
 if sys.platform == "win32":
     import ctypes
     user32 = ctypes.windll.user32
@@ -44,6 +47,4 @@ def start_client(server_ip, server_port):
     client.close()
 
 if __name__ == "__main__":
-    server_ip = "127.0.0.1"
-    server_port = 9999
-    start_client(server_ip, server_port)
+    start_client(DEFAULT_SERVER_IP, DEFAULT_SERVER_PORT)
