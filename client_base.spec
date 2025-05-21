@@ -14,14 +14,14 @@ a = Analysis(
         # Placeholder for PyArmor runtime files: (source_path, destination_name_in_bundle)
         ('{{PYARMOR_DATA_SOURCE}}', '{{PYARMOR_DATA_DEST}}'),
     ],
-    hiddenimports=[], # Add any modules PyInstaller might miss, e.g., 'gevent.hub'
+    hiddenimports=['socket', 'requests'], # Add any modules PyInstaller might miss, e.g., 'gevent.hub'
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
     excludes=[
         # Common modules to exclude for smaller size and reduced noise
         'tkinter', 'test', 'unittest', 'pydoc', 'distutils', 'setuptools',
-        '__pycache__', 'idlelib', 'html', 'xml', 'email', 'http',
+        '__pycache__', 'idlelib', 'html', 'xml', 
         'asyncio', 'concurrent', # Often included but might not be essential
     ],
     noarchive=False,
