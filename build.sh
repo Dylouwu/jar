@@ -10,7 +10,7 @@ SPEC_TEMPLATE="client_base.spec"
 echo "--- JAR RAT Build Script ---"
 
 echo "[1/10] Cleaning previous build artifacts..."
-rm -rf "$VENV_DIR" "$OBFUSCATED_DIR" dist/ build/ "$TEMP_CLIENT_SCRIPT"
+rm -rf "$VENV_DIR" "$OBFUSCATED_DIR" dist/ build/ 
 echo "Cleaned."
 
 echo "--- Client Configuration ---"
