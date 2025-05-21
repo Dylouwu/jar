@@ -23,7 +23,7 @@ def logo():
     """ + colorama.Fore.RESET)
     print(colorama.Fore.YELLOW + "JAR - Just Another RAT" + colorama.Fore.RESET)
     print(colorama.Fore.YELLOW + "By: Dylouwu" + colorama.Fore.RESET)
-    print(colorama.Fore.YELLOW + "Version: 0.1.0 " + colorama.Fore.RESET)
+    print(colorama.Fore.YELLOW + "Version: 0.1.0 (Startup Config & Ctrl+C Exit)" + colorama.Fore.RESET)
 
 def handle_client(client_socket, address):
     global IN_LOCK_MODE, LOCKED_CLIENT_ADDR
@@ -116,7 +116,7 @@ def interactive_shell_mode(client_socket, address):
     LOCKED_CLIENT_ADDR = address
     
     current_remote_cwd = get_client_cwd(client_socket, address)
-    print(f"\n{colorama.Fore.MAGENTA}[*] Interactive shell with {address[0]}:{address[1]}. (Type 'exitlock' to return){colorama.Fore.RESET}")
+    print(f"\n{colorama.Fore.MAGENTA}[*] Interactive shell with {address[0]}:{address[1]}. (Type 'exitlock' or Ctrl+C/Ctrl+D to return){colorama.Fore.RESET}")
 
     while IN_LOCK_MODE:
         if LOCKED_CLIENT_ADDR != address: 
@@ -131,8 +131,8 @@ def interactive_shell_mode(client_socket, address):
         try:
             command = input(prompt_text)
         except (KeyboardInterrupt, EOFError):
-            print("\nUse 'exitlock' to leave interactive mode.")
-            continue
+            print("\nExiting interactive mode...") # User pressed Ctrl+C or Ctrl+D
+            break 
 
         if command.strip().lower() == "exitlock":
             break
@@ -195,13 +195,33 @@ def display_menu_and_clients(current_clients_list):
         for idx, address_info in enumerate(current_clients_list, start=1):
             print(f"  {idx}. {address_info[0]}:{address_info[1]}")
 
-def start_server(host="0.0.0.0", port=9999):
+def start_server(default_host="0.0.0.0", default_port=9999):
     global IN_LOCK_MODE, LOCKED_CLIENT_ADDR
     colorama.init(autoreset=True)
     load_dotenv()
     
-    host = os.getenv("SERVER_HOST", host)
-    port = int(os.getenv("SERVER_PORT", port))
+    env_host = os.getenv("SERVER_HOST", default_host)
+    env_port_str = os.getenv("SERVER_PORT", str(default_port))
+
+    try:
+        host_input = input(f"Enter server IP to listen on (default: {env_host}): ").strip()
+        host = host_input if host_input else env_host
+
+        port_input = input(f"Enter server port to listen on (default: {env_port_str}): ").strip()
+        port_str = port_input if port_input else env_port_str
+        port = int(port_str)
+        if not (0 < port < 65536):
+            raise ValueError("Port must be between 1 and 65535")
+
+    except ValueError as e:
+        print(f"{colorama.Fore.RED}[!] Invalid input: {e}. Using defaults {env_host}:{env_port_str}.{colorama.Fore.RESET}")
+        host = env_host
+        try:
+            port = int(env_port_str)
+        except ValueError: # Fallback if default from env is also bad
+            port = default_port 
+            print(f"{colorama.Fore.RED}[!] Default port in .env is invalid, using hardcoded default: {port}{colorama.Fore.RESET}")
+
 
     os.system("cls" if os.name == "nt" else "clear")
     logo()
@@ -241,7 +261,7 @@ def start_server(host="0.0.0.0", port=9999):
             display_menu_and_clients(current_clients_for_menu)
             show_menu_next_iteration = False
         
-        raw_choice = input(f"\n{colorama.Fore.CYAN}JAR > {colorama.Fore.RESET}").strip() # Changed prompt
+        raw_choice = input(f"\n{colorama.Fore.CYAN}JAR > {colorama.Fore.RESET}").strip()
         
         with clients_lock: 
             current_client_addrs_for_processing = list(clients.keys())
