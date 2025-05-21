@@ -3,6 +3,7 @@ let
   pythonEnv = pkgs.python3.withPackages (ps: with ps; [
     requests
     colorama 
+    python-dotenv
   ]);
 in
 pkgs.mkShell {

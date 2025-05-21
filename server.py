@@ -3,6 +3,7 @@ import threading
 import os
 import colorama
 import time
+from dotenv import load_dotenv
 
 def logo():
     print(colorama.Fore.CYAN + """
@@ -26,7 +27,7 @@ def handle_client(client_socket, address):
     while True:
         try:
             response = client_socket.recv(4096).decode('utf-8', errors='replace')
-            if not response: # Client disconnected gracefully or sent empty data
+            if not response:
                 break
             print(f"\n{colorama.Fore.GREEN}[{address[0]}] Output {colorama.Fore.RESET}:\n{response}")
             
@@ -61,6 +62,9 @@ def accept_clients(server):
 
 def start_server(host="0.0.0.0", port=9999):
     colorama.init(autoreset=True)
+    
+    host = os.getenv("SERVER_HOST", host)
+    port = int(os.getenv("SERVER_PORT", port))
 
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
