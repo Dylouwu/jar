@@ -162,6 +162,8 @@ if [[ "$REPLY" =~ ^[Yy]$ ]]; then
                 --add-rpath "$NIX_ZLIB_PATH" \
                 "$FINAL_EXECUTABLE"
             echo "Executable patched successfully for NixOS."
+            echo "NixOS Portability Note: This executable is specific to this machine's"
+            echo "Nix store paths. It will certainly NOT RUN on other NixOS systems."
         else
             echo "Error: Patchelf failed. Necessary library paths not resolved or executable missing."
             echo "  LD Path: ${NIX_LD_PATH:-Not resolved}"
@@ -182,5 +184,4 @@ rm -f "$TEMP_CLIENT_SCRIPT" "$SPEC_FILE"
 echo "Build process complete!"
 echo "Executable is at: $FINAL_EXECUTABLE"
 echo ""
-echo "NixOS Portability Note: If patched, this executable is specific to this machine's"
-echo "Nix store paths. It will certainly NOT RUN on other NixOS systems."
+
