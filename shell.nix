@@ -10,6 +10,7 @@ pkgs.mkShell {
   buildInputs = [
     pythonEnv
     pkgs.git
+    pkgs.patchelf
   ];
   shellHook = ''
     export PYTHONPATH=${pythonEnv}/${pythonEnv.sitePackages}
