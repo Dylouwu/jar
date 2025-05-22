@@ -33,12 +33,12 @@ def logo():
      ██║██╔══██╗██╔══██╗
      ██║███████║██████╔╝
  ██  ██║██╔══██║██╔══██╗
- ╚█████╔╝██║  ██║██║  ██║
-  ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+╚█████╔╝██║  ██║██║  ██║
+ ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
     """ + colorama.Fore.RESET)
-    print(colorama.Fore.YELLOW + "JAR - Just Another RAT (Discord C2)" + colorama.Fore.RESET)
+    print(colorama.Fore.YELLOW + "JAR - Just Another RAT" + colorama.Fore.RESET)
     print(colorama.Fore.YELLOW + "By: Dylouwu" + colorama.Fore.RESET)
-    print(colorama.Fore.YELLOW + "Version: 2.1.2 (NameError Check)" + colorama.Fore.RESET) # Version updated
+    print(colorama.Fore.YELLOW + "Version: 1.0.0" + colorama.Fore.RESET) # Version updated
 
 @bot.event
 async def on_ready():
