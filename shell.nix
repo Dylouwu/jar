@@ -1,8 +1,10 @@
 { pkgs ? import <nixpkgs> {} }:
 let
   pythonEnv = pkgs.python3.withPackages (ps: with ps; [
-    requests
     colorama 
+    discordpy
+    requests
+    pyinstaller
     python-dotenv
   ]);
 in
