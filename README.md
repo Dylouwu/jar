@@ -9,8 +9,6 @@ JAR is a Python-based Remote Access Trojan (RAT) that uses Discord as its Comman
 * **Discord C2:** Uses Discord messages for sending commands and receiving output.
 * **Command Execution:** Execute arbitrary shell commands on the client.
 * **Interactive Shell:** "Lock" onto a specific client for an interactive shell-like session.
-* **Encrypted Communication:** Commands and output payloads are encrypted using AES (Fernet).
-* **Client Persistence (Windows Example):** Client attempts to set a Registry Run key for persistence on Windows.
 * **Client Builder:** `build.sh` script to configure, obfuscate (with PyArmor), and bundle the client (with PyInstaller).
 * **Server Control:**
     * Console-based interface on the server.
@@ -22,24 +20,20 @@ JAR is a Python-based Remote Access Trojan (RAT) that uses Discord as its Comman
 
 ## Prerequisites
 
-- For any linux distros :
+For NixOS :
+**Just run `nix-shell` :3**
+
+For any linux distros :
 
 **General:**
 * Python 3.8+
 * `pip` (Python package installer)
 
 **For the Server (`server.py`):**
-* A Discord account.
-* Ability to create a Discord Bot and invite it to a server you control.
 * Python libraries: `discord.py`, `python-dotenv`, `colorama`, `cryptography`.
 
 **For the Client Builder (`build.sh`):**
-* A Linux-like environment (Bash shell).
-* Standard command-line utilities: `find`, `sed`.
 * `patchelf` (if you intend to use the NixOS patching feature).
-
-- For NixOS :
-**Just run `nix-shell` :3**
 
 ## Setup Instructions
 
